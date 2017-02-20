@@ -1,6 +1,7 @@
 package exercises;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by michal on 01.02.17.
@@ -8,19 +9,14 @@ import java.util.Arrays;
  * https://www.codewars.com/kata/5656b6906de340bd1b0000ac
  */
 public class TwoToOne {
-
-    public static String longest(String s1, String s2) {
-        String addedStrings = s1 + s2;
+    public static String longest(String firstWord, String secondWord) {
+        String addedStrings = firstWord + secondWord;
         String result = "";
-
         for (int i = 0; i < addedStrings.length(); i++) {
             if (!result.contains(String.valueOf(addedStrings.charAt(i)))) {
                 result += addedStrings.charAt(i);
             }
         }
-        char[] ch = result.toCharArray();
-        Arrays.sort(ch);
-        return String.valueOf(ch);
-
+        return Stream.of(result.split("")).sorted().collect(Collectors.joining());
     }
 }

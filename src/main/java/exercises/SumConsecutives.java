@@ -1,6 +1,6 @@
 package exercises;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,16 +9,13 @@ import java.util.List;
  * https://www.codewars.com/kata/55eeddff3f64c954c2000059
  */
 public class SumConsecutives {
-    public static List<Integer> sumConsecutives(List<Integer> s) {
-        List<Integer> result = new ArrayList<Integer>();
-        int currentRepeating = 0;
-        for (int i : s) {
-            if (result.isEmpty() || currentRepeating != i) {
-                currentRepeating = i;
-                result.add(i);
-            } else {
-                result.set((result.size() - 1), result.get((result.size() - 1)) + i);
-            }
+    public static List<Integer> sumConsecutives(List<Integer> integerList) {
+        // using LinkedList so have access to pollLast()
+        LinkedList<Integer> result = new LinkedList<>();
+        int previousNumber = 0;
+        for (int number : integerList) {
+            result.add(number == previousNumber ? result.pollLast() + number : number);
+            previousNumber = number;
         }
         return result;
     }
