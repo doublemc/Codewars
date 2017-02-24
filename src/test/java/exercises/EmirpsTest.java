@@ -16,10 +16,19 @@ public class EmirpsTest {
     private Object[] reversedPrimes() {
         return new Object[]{
             new Object[] {100, new long[] {13, 17, 31, 37, 71, 73, 79, 97}},
-            new Object[] {20, new long[] {}},
+            new Object[] {20, new long[] {13, 17}},
             new Object[] {1000, new long[] {13, 17, 31, 37, 71, 73, 79, 97, 107, 113, 149, 157, 167, 179,
                     199, 311, 337, 347, 359, 389, 701, 709, 733, 739, 743, 751,
                     761, 769, 907, 937, 941, 953, 967, 971, 983, 991}}
+        };
+    }
+
+    private Object[] emirpValues() {
+        return new Object[]{
+            new Object[] {10, new long[] {0, 0, 0}},
+            new Object[] {50, new long[] {4, 37, 98} },
+            new Object[] {100, new long[] {8, 97, 418} },
+            new Object[] {1000, new long[] {36, 991, 16788} },
         };
     }
 
@@ -48,16 +57,14 @@ public class EmirpsTest {
     }
 
     // structure:
-    // [number of emirps bellow n, largest emirp smaller than n, sum of all the emirps of the sequence bellow n]
+    // [number of emirps below n, largest emirp smaller than n, sum of all the emirps of the sequence bellow n]
     @Test
-    public void shouldReturnArrayWithSpecificStructure() {
-        // given
-        long limit = 100;
-
+    @Parameters(method = "emirpValues")
+    public void shouldReturnArrayWithSpecificStructure(long limit, long[] result) {
         // when
         long[] arrayEmirp = Emirps.findEmirp(limit);
 
         // then
-        assertThat(arrayEmirp).contains(8, 97, 418);
+        assertThat(arrayEmirp).contains(result);
     }
 }

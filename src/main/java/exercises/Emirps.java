@@ -32,7 +32,7 @@ class Emirps {
 
         List<Long> reversedPrimes = new ArrayList<>();
         for (long prime : primeList) {
-            if (primeList.contains(getReverseLong(prime)) && !isItPalin(prime)) {
+            if (isPrime(getReverseLong(prime)) && !isItPalin(prime)) {
                 reversedPrimes.add(prime);
             }
         }
@@ -50,38 +50,20 @@ class Emirps {
     }
 
     private static boolean isPrime(long n) {
-        if (n % 2 == 0 && n != 2) {
-            return false;
-        } else {
-            if (n == 1) {
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
                 return false;
             }
-            for (int i = 3; i <= Math.sqrt(n) + 1; i += 2) {
-                if (n % i == 0) {
-                    return false;
-                }
-            }
-            return true;
         }
+        return true;
     }
 
     private static long getReverseLong(long value) {
-        long resultNumber = 0;
-        for(long i = value; i !=0; i /= 10) {
-            resultNumber = resultNumber * 10 + i % 10;
-        }
-        return resultNumber;
+        long reverse = Long.parseLong(new StringBuilder(String.valueOf(value)).reverse().toString());
+        return reverse;
     }
 
-    private static boolean isItPalin(long sPrime) {
-        long sPrimeBackup = sPrime;
-        long reverse = 0;
-
-        while (sPrime > 0) {
-            reverse = reverse * 10 + sPrime % 10;
-            sPrime = sPrime / 10;
-        }
-
-        return (sPrimeBackup == reverse);
+    private static boolean isItPalin(long prime) {
+        return prime == getReverseLong(prime);
     }
 }
